@@ -44,3 +44,4 @@ mage-bin
 
 # cmd
 bin-all/
+dist/
