@@ -1,0 +1,29 @@
+env:
+  - GO111MODULE=on
+  - GOPROXY=https://proxy.golang.org,https://gocenter.io,direct
+before:
+  hooks:
+    - go mod download
+builds:
+- main: .main.go
+  id: seed-ops
+  binary: seed-ops
+  env:
+    - CGO_ENABLED=0
+  goos: 
+    - darwin
+    - linux
+    - windows
+  goarch:
+    - 386
+    - amd64
+    - arm
+    - arm64
+archives:
+- name_template: '{{ .ProjectName }}_{{.Tag}}_{{ .Os }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}'
+  format_overrides:
+  - goos: windows
+    format: zip
+release:
+  github:
+  prerelease: auto
